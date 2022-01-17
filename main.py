@@ -52,10 +52,9 @@ screen = pygame.display.set_mode(SIZE)
 pygame.display.set_caption("Game of Life")
 clock = pygame.time.Clock()
 
-load_screen(screen)  # экран загрузки
+#load_screen(screen)  # экран загрузки
 
-field = Field(FIELD_WIDTH, FIELD_HEIGHT, (DEAD_COLOR, MAIN_COLOR), CELL_SIZE)
-field.set_boarders(BOARDERS)
+field = Field(FIELD_WIDTH, FIELD_HEIGHT, (DEAD_COLOR, MAIN_COLOR), CELL_SIZE, BOARDERS)
 
 ongoing = False
 
@@ -63,16 +62,17 @@ running = True
 
 while running:
     for event in pygame.event.get():
-        pressed = pygame.mouse.get_pressed()
+        pressed = pygame.mouse.get_pressed(3)
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             # при нажатии пробела ставим на паузу или продолжаем игру
             ongoing = not ongoing
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.but
         elif pressed[0] or pressed[2] and ongoing:
             x, y = pygame.mouse.get_pos()
             xi, yi = x - BOARDERS[0], y - BOARDERS[1]
-            if xi < 0 and yi < 0:
+            if xi < 0 or yi < 0:
                 continue
             i = int(xi // CELL_SIZE)
             j = int(yi // CELL_SIZE)
@@ -90,16 +90,19 @@ while running:
     else:
         text = "pause"
 
-    string_rendered = FONT.render(text, True, MAIN_COLOR)
-    text_rect = string_rendered.get_rect()
-    text_rect.centerx = WIDTH // 2
+    text_rendered = FONT.render(text, True, MAIN_COLOR)
+    text_rect = text_rendered.get_rect()
+    text_rect.centerx = WIDTH // 4
     text_rect.centery = BOARDERS[1] // 2
-    screen.blit(string_rendered, text_rect)
+    screen.blit(text_rendered, text_rect)
 
-    #print([x.is_alive() for x in field.field[0]])
+    clear_rendered = FONT.render("clear", True, MAIN_COLOR)
+    text_rect = clear_rendered.get_rect()
+    text_rect.centerx = WIDTH // 4 * 3
+    text_rect.centery = BOARDERS[1] // 2
+    screen.blit(clear_rendered, text_rect)
 
-    field.next_step(screen, ongoing)
+    field.step(screen, ongoing)
     pygame.display.update()
-    clock.tick(3) # FPS)
-    print(0)
+    clock.tick(FPS)
 pygame.quit()
