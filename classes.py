@@ -60,17 +60,17 @@ class Field:
 class Cell:
     # класс, реализующий одну клетку
     def __init__(self, colors, x, y):
-        self.alive = 0
+        self.__alive = 0
         self.color = colors[0]
         self.coors = x, y
 
     def is_alive(self):
         """возвращает 1, если клетка живая, 0 - мертвая"""
-        return self.alive
+        return self.__alive
 
     def set_alive(self, value, colors):
         """задает параметр"""
-        self.alive = value
+        self.__alive = value
         if value == 0:
             self.color = colors[0]
         else:

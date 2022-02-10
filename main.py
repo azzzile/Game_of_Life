@@ -3,9 +3,9 @@ import sys
 from classes import Field, Cell
 
 # всякие константы
-BACKGROUND = pygame.Color('darkslategray')
-MAIN_COLOR = pygame.Color('darkseagreen2')
-DEAD_COLOR = pygame.Color('darkseagreen4')
+BACKGROUND = pygame.Color(73, 54, 81)
+MAIN_COLOR = pygame.Color(194, 239, 150)
+DEAD_COLOR = pygame.Color(87, 176, 161)
 SIZE = WIDTH, HEIGHT = 620, 670
 FIELD_SIZE = FIELD_WIDTH, FIELD_HEIGHT = 50, 50
 BOARDERS = 30, 90
@@ -57,7 +57,6 @@ clock = pygame.time.Clock()
 field = Field(FIELD_WIDTH, FIELD_HEIGHT, (DEAD_COLOR, MAIN_COLOR), CELL_SIZE, BOARDERS)
 
 ongoing = False
-
 running = True
 
 while running:
@@ -68,7 +67,11 @@ while running:
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             # при нажатии пробела ставим на паузу или продолжаем игру
             ongoing = not ongoing
-        elif event.type == pygame.MOUSEBUTTONDOWN and event.but
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            x, y = pygame.mouse.get_pos()
+            if 0 <= x <= 0:
+                pass
+
         elif pressed[0] or pressed[2] and ongoing:
             x, y = pygame.mouse.get_pos()
             xi, yi = x - BOARDERS[0], y - BOARDERS[1]
@@ -94,6 +97,7 @@ while running:
     text_rect = text_rendered.get_rect()
     text_rect.centerx = WIDTH // 4
     text_rect.centery = BOARDERS[1] // 2
+
     screen.blit(text_rendered, text_rect)
 
     clear_rendered = FONT.render("clear", True, MAIN_COLOR)
