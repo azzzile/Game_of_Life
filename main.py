@@ -5,7 +5,7 @@ from classes import Field, Cell
 # всякие константы
 BACKGROUND = pygame.Color(73, 54, 81)
 MAIN_COLOR = pygame.Color(194, 239, 150)
-DEAD_COLOR = pygame.Color(87, 176, 161)
+DEAD_COLOR = pygame.Color(87, 116, 161)
 SIZE = WIDTH, HEIGHT = 620, 670
 FIELD_SIZE = FIELD_WIDTH, FIELD_HEIGHT = 50, 50
 BOARDERS = 30, 90
@@ -37,7 +37,7 @@ def load_screen(screen):
         string_rendered = FONT.render(line, True, MAIN_COLOR)
         intro_rect = string_rendered.get_rect()
         intro_rect.centerx = WIDTH // 2
-        intro_rect.centery = 70
+        intro_rect.centery = HEIGHT // 2
         screen.blit(string_rendered, intro_rect)
 
         pygame.display.flip()
@@ -52,7 +52,7 @@ screen = pygame.display.set_mode(SIZE)
 pygame.display.set_caption("Game of Life")
 clock = pygame.time.Clock()
 
-#load_screen(screen)  # экран загрузки
+load_screen(screen)  # экран загрузки
 
 field = Field(FIELD_WIDTH, FIELD_HEIGHT, (DEAD_COLOR, MAIN_COLOR), CELL_SIZE, BOARDERS)
 
